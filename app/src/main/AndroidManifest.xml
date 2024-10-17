@@ -15,6 +15,9 @@
         android:theme="@style/Theme.ApiCocteleskt"
         tools:targetApi="31">
         <activity
+            android:name=".view.DetailDrink"
+            android:exported="false" />
+        <activity
             android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>

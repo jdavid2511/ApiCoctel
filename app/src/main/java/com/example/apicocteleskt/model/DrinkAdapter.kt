@@ -15,10 +15,10 @@ class DrinkAdapter(private var drinkList: MutableList<Drink>, private val contex
     RecyclerView.Adapter<DrinkAdapter.ViewHolder>() {
     private val drinkListOriginal = drinkList.toMutableList()
 
-    private var listener: OnItemClickListener? = null
+    private lateinit var listener: OnItemClickListener
 
-    fun interface OnItemClickListener {
-        fun onItemClick(item: Drink?)
+    interface OnItemClickListener {
+        fun onItemClick(item: Drink)
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
@@ -37,9 +37,7 @@ class DrinkAdapter(private var drinkList: MutableList<Drink>, private val contex
         holder.idNombre.setText(drinkList[position].strDrink)
         Glide.with(context).load(drinkList[position].strDrinkThumb).into(holder.iv_Drinks)
         holder.itemView.setOnClickListener {
-            if (listener != null) {
-                listener!!.onItemClick(item)
-            }
+            listener?.onItemClick(item)
         }
     }
 

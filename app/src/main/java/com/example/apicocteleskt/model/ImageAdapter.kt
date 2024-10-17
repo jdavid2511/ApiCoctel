@@ -9,6 +9,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.apicocteleskt.R
+import com.example.apicocteleskt.model.DrinkAdapter.OnItemClickListener
 
 class ImageAdapter(var context: Context, var listImages: MutableList<Drink>) :
     RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
@@ -16,6 +17,10 @@ class ImageAdapter(var context: Context, var listImages: MutableList<Drink>) :
 
     fun interface OnItemClickListener {
         fun onItemClick(item: Drink)
+    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        this.listener = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,9 +33,7 @@ class ImageAdapter(var context: Context, var listImages: MutableList<Drink>) :
         Glide.with(context).load(listImages[position].strDrinkThumb).into(holder.imageView)
 
         holder.itemView.setOnClickListener {
-            if (listener != null) {
-                listener!!.onItemClick(item)
-            }
+           listener?.onItemClick(item)
         }
     }
 

@@ -3,6 +3,7 @@ package com.example.apicocteleskt.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.SearchView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -12,15 +13,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.apicocteleskt.R
 import com.example.apicocteleskt.model.Drink
 import com.example.apicocteleskt.model.DrinkAdapter
+import com.example.apicocteleskt.model.DrinkAdapter.OnItemClickListener
 import com.example.apicocteleskt.model.ImageAdapter
-import com.example.apicocteleskt.model.ImageAdapter.OnItemClickListener
 import com.example.apicocteleskt.presenter.DrinksContract
 import com.example.apicocteleskt.presenter.Presenter
 
-class MainActivity : AppCompatActivity(), DrinksContract.View {
+class MainActivity : AppCompatActivity(), DrinksContract.View, SearchView.OnQueryTextListener {
 
     private val presenter: DrinksContract.Presenter = Presenter(this)
     private lateinit var recyclerViewDrinks: RecyclerView
+    private lateinit var etBuscar: SearchView
+    private lateinit var drinkAdapter: DrinkAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +37,9 @@ class MainActivity : AppCompatActivity(), DrinksContract.View {
 
         recyclerViewDrinks = findViewById(R.id.rv_drinks)
         recyclerViewDrinks.layoutManager = GridLayoutManager(applicationContext, 2)
+
+        etBuscar = findViewById(R.id.search_bar)
+        etBuscar.setOnQueryTextListener(this)
 
         activateOnClick()
     }
@@ -70,52 +76,52 @@ class MainActivity : AppCompatActivity(), DrinksContract.View {
     }
 
     override fun viewCoctelAlcoholic(drinksList: MutableList<Drink>) {
-        val drinkAdapter = DrinkAdapter(drinksList, this)
+        drinkAdapter = DrinkAdapter(drinksList, this)
         recyclerViewDrinks.setAdapter(drinkAdapter)
 
-        drinksList.reverse()
-        setupImageCarousel(drinksList)
-        drinkAdapter.setOnItemClickListener {
-            fun onItemClick(item: Drink) {
+        setupImageCarousel(drinksList.asReversed())
+
+        drinkAdapter.setOnItemClickListener(object : OnItemClickListener {
+            override fun onItemClick(item: Drink) {
                 val intent = Intent(
                     this@MainActivity,
-                    DrinkDetail::class.java
+                    DetailDrink::class.java
                 )
                 intent.putExtra("id", item.idDrink)
                 intent.putExtra("name", item.strDrink)
                 intent.putExtra("img", item.strDrinkThumb)
                 startActivity(intent)
             }
-        }
+        })
     }
 
     override fun viewCoctelNoAlcoholic(drinksList: MutableList<Drink>) {
-        val drinkAdapter = DrinkAdapter(drinksList, this)
+        drinkAdapter = DrinkAdapter(drinksList, this)
         recyclerViewDrinks.setAdapter(drinkAdapter)
 
-        drinkAdapter.setOnItemClickListener {
-            fun onItemClick(item: Drink) {
+        drinkAdapter.setOnItemClickListener(object : OnItemClickListener {
+            override fun onItemClick(item: Drink) {
                 val intent = Intent(
                     this@MainActivity,
-                    DrinkDetail::class.java
+                    DetailDrink::class.java
                 )
                 intent.putExtra("id", item.idDrink)
                 intent.putExtra("name", item.strDrink)
                 intent.putExtra("img", item.strDrinkThumb)
                 startActivity(intent)
             }
-        }
+        })
     }
 
     override fun viewOrdinary(drinksList: MutableList<Drink>) {
-        val drinkAdapter = DrinkAdapter(drinksList, this)
+        drinkAdapter = DrinkAdapter(drinksList, this)
         recyclerViewDrinks.setAdapter(drinkAdapter)
 
-        drinkAdapter.setOnItemClickListener ( DrinkAdapter.OnItemClickListener () {
-            fun onItemClick(item: Drink) {
+        drinkAdapter.setOnItemClickListener(object : OnItemClickListener {
+            override fun onItemClick(item: Drink) {
                 val intent = Intent(
                     this@MainActivity,
-                    DrinkDetail::class.java
+                    DetailDrink::class.java
                 )
                 intent.putExtra("id", item.idDrink)
                 intent.putExtra("name", item.strDrink)
@@ -126,65 +132,84 @@ class MainActivity : AppCompatActivity(), DrinksContract.View {
     }
 
     override fun viewCocktail(drinksList: MutableList<Drink>) {
-        val drinkAdapter = DrinkAdapter(drinksList, this)
+        drinkAdapter = DrinkAdapter(drinksList, this)
         recyclerViewDrinks.setAdapter(drinkAdapter)
 
-        drinkAdapter.setOnItemClickListener {
-            fun onItemClick(item: Drink) {
+        drinkAdapter.setOnItemClickListener(object : OnItemClickListener {
+            override fun onItemClick(item: Drink) {
                 val intent = Intent(
                     this@MainActivity,
-                    DrinkDetail::class.java
+                    DetailDrink::class.java
                 )
                 intent.putExtra("id", item.idDrink)
                 intent.putExtra("name", item.strDrink)
                 intent.putExtra("img", item.strDrinkThumb)
                 startActivity(intent)
             }
-        }
+        })
     }
 
     override fun viewCocktailGlass(drinksList: MutableList<Drink>) {
-        val drinkAdapter = DrinkAdapter(drinksList, this)
+        drinkAdapter = DrinkAdapter(drinksList, this)
         recyclerViewDrinks.setAdapter(drinkAdapter)
 
-        drinkAdapter.setOnItemClickListener {
-            fun onItemClick(item: Drink) {
+        drinkAdapter.setOnItemClickListener(object : OnItemClickListener {
+            override fun onItemClick(item: Drink) {
                 val intent = Intent(
                     this@MainActivity,
-                    DrinkDetail::class.java
+                    DetailDrink::class.java
                 )
                 intent.putExtra("id", item.idDrink)
                 intent.putExtra("name", item.strDrink)
                 intent.putExtra("img", item.strDrinkThumb)
                 startActivity(intent)
             }
-        }
+        })
     }
 
     override fun viewChampageFlute(drinksList: MutableList<Drink>) {
-        val drinkAdapter = DrinkAdapter(drinksList, this)
+        drinkAdapter = DrinkAdapter(drinksList, this)
         recyclerViewDrinks.setAdapter(drinkAdapter)
 
-        drinkAdapter.setOnItemClickListener {
-            fun onItemClick(item: Drink) {
+        drinkAdapter.setOnItemClickListener(object : OnItemClickListener {
+            override fun onItemClick(item: Drink) {
                 val intent = Intent(
                     this@MainActivity,
-                    DrinkDetail::class.java
+                    DetailDrink::class.java
                 )
                 intent.putExtra("id", item.idDrink)
                 intent.putExtra("name", item.strDrink)
                 intent.putExtra("img", item.strDrinkThumb)
                 startActivity(intent)
             }
-        }
+        })
     }
 
     private fun setupImageCarousel(imageUrls: MutableList<Drink>) {
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerCarousel)
-        val imageAdapter: ImageAdapter = ImageAdapter(this@MainActivity, imageUrls)
+        val imageAdapter = ImageAdapter(this@MainActivity, imageUrls)
         recyclerView.adapter = imageAdapter
-        OnItemClickListener{
-
+        imageAdapter.setOnItemClickListener { item ->
+            val intent = Intent(
+                this@MainActivity,
+                DetailDrink::class.java
+            )
+            intent.putExtra("id", item.idDrink)
+            intent.putExtra("name", item.strDrink)
+            intent.putExtra("img", item.strDrinkThumb)
+            startActivity(intent)
         }
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        return false
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        drinkAdapter
+        if (newText != null) {
+            drinkAdapter.filtrado(newText)
+        }
+        return false
     }
 }

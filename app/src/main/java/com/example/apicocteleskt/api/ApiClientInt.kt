@@ -3,6 +3,7 @@ package com.example.apicocteleskt.api
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiClientInt {
 
@@ -25,7 +26,7 @@ interface ApiClientInt {
     fun getChampageFlute(): Call<ApiResponse>
 
     @GET("lookup.php")
-    fun getDrinkById(@Path("i") id : String): Call<ApiResponse>
+    fun getDrinkById(@Query("i") idDrink : String): Call<ApiResponse>
 
 
 }
