@@ -28,5 +28,6 @@ interface ApiClientInt {
     @GET("lookup.php")
     fun getDrinkById(@Query("i") idDrink : String): Call<ApiResponse>
 
-
+    @GET("{ingredient}")
+    fun getImgIngredients(@Path("ingredient") ingredient: String): Call<ApiResponse>
 }

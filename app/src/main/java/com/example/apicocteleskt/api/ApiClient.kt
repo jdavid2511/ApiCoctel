@@ -13,5 +13,14 @@ class ApiClient {
 
             return retrofit
         }
+
+        fun getImgIngredient(): Retrofit {
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://www.thecocktaildb.com/images/ingredients/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+
+            return retrofit
+        }
     }
 }

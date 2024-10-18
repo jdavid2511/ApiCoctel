@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -25,11 +26,11 @@ class DetailDrink : AppCompatActivity() {
 
     private lateinit var drink_name: TextView
     private lateinit var image_drink: ImageView
-    private lateinit var recyclerView: RecyclerView
     private lateinit var id: String
     private lateinit var name: String
     private lateinit var img: String
     private lateinit var listIngredients: List<String>
+    private lateinit var rvIngredients: RecyclerView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,11 +76,8 @@ class DetailDrink : AppCompatActivity() {
                                 drink.strIngredient15
                             )
                         }
-
-                        val recyclerView = findViewById<RecyclerView>(R.id.rv_ingredientes)
-                        recyclerView.layoutManager = LinearLayoutManager(this@DetailDrink)
-                        val adapter = IngredientAdapter(listIngredients)
-                        recyclerView.adapter = adapter
+                        val adapter = IngredientAdapter(listIngredients, this@DetailDrink)
+                        rvIngredients.adapter = adapter
                     }
 
                 }
@@ -99,7 +97,6 @@ class DetailDrink : AppCompatActivity() {
             .error(R.drawable.ic_launcher_background) // Recurso de imagen de error (opcional)
             .transition(DrawableTransitionOptions.withCrossFade()) // Opciones de transición (opcional)
             .into(image_drink)
-
     }
 
     private fun init(){
@@ -111,6 +108,7 @@ class DetailDrink : AppCompatActivity() {
         drink_name.text = name
 
         image_drink = findViewById(R.id.image_drink)
-        recyclerView = findViewById(R.id.rv_ingredientes)
+        rvIngredients = findViewById(R.id.rv_ingredientes)
+        rvIngredients.layoutManager = GridLayoutManager(applicationContext, 2)
     }
 }
